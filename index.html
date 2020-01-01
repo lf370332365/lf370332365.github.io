@@ -1,328 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
+extends base
 
-  
-  <title>MeeQ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MeeQ">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="MeeQ">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="MeeQ" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+block title
+    title= config.title
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+block content
+    include _partial/common.pug
+    .l-postlist
+        each post in page.posts.toArray()
+            .l-post
+                .p-desc.box
+                    .p-pic
+                    //- title
+                    h1.p-title
+                        a(href=url_for(post.path))
+                            +title(post)
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">MeeQ</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-Hello-Hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/01/Hello-Hexo/" class="article-date">
-  <time datetime="2020-01-01T08:31:52.000Z" itemprop="datePublished">2020-01-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/01/Hello-Hexo/">Hello Hexo</a>
-    </h1>
-  
+                    //- description
+                    if post.description
+                        .p-content
+                            != post.description
+                    else if post.excerpt
+                        .p-content
+                            != post.excerpt
+                    else if post.content
+                        - var br = 0
+                        - for (var i = 0; i < 5; ++i) {
+                            - br = post.content.indexOf('\n',br+1)
+                            if br < 0
+                                - break
+                            if br > 150
+                                - break
+                        - }
+                        if br < 0
+                            .p-content
+                                != post.content
+                        else
+                            .p-content
+                                != post.content.substring(0, br)
+                    //- readmore
+                    p(class='p-readmore')
+                        a(href=url_for(post.path))= __('阅读更多 >>')
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://docs.python.org/3/" target="_blank" rel="noopener">Python documents</a><br><a href="https://docs.python.org/3/library/index.html" target="_blank" rel="noopener">The Python Standard Library</a></p>
-<h2 id="Python-包管理工具"><a href="#Python-包管理工具" class="headerlink" title="Python 包管理工具"></a>Python 包管理工具</h2><p>pipenv : 新一代Python项目环境与依赖包管理工具</p>
-<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><ul>
-<li><a href="">Python_基础知识</a></li>
-<li><a href="">Python_数据可视化编程</a></li>
-<li><a href="">Python_网络数据采集</a></li>
-<li><a href="#Python-file">Python file</a></li>
-<li><a href="#Python-grammar">Python grammar</a></li>
-<li><a href="#Python-functions">Python function</a></li>
-</ul>
-<h2 id="Python-file"><a href="#Python-file" class="headerlink" title="Python file"></a>Python file</h2><ul>
-<li>文件读取 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_file/Python_file_reading.py" target="_blank" rel="noopener">Python_file_reading</a></li>
-<li>文件写入 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_file/Python_file_writing.py" target="_blank" rel="noopener">Python_file_writing</a></li>
-<li>文件读取然后写入 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_file/Python_file_reading_and_writing.py" target="_blank" rel="noopener">Python_file_reading_and_writing</a></li>
-<li>Gzip文件读写 <a href="https://github.com/lf370332365/Python/tree/master/Python_fundamental_tutorial/Python_file" target="_blank" rel="noopener">Reading and writing gzip-format files</a>  </li>
-</ul>
-<h2 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h2><ul>
-<li>pandas的读取数据函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas%E7%9A%84%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%87%BD%E6%95%B0.png" target="_blank" rel="noopener">pandas的读取数据函数</a></li>
-</ul>
-<h2 id="操作文件和目录"><a href="#操作文件和目录" class="headerlink" title="操作文件和目录"></a>操作文件和目录</h2><ul>
-<li>Python爬虫开发与项目实践 P14</li>
-<li>Python OS 文件/目录方法 <a href="https://www.runoob.com/python/os-file-methods.html" target="_blank" rel="noopener">Python OS 文件/目录方法</a></li>
-<li>Python os.path 模块 <a href="https://www.runoob.com/python/python-os-path.html" target="_blank" rel="noopener">os.path 模块</a></li>
-</ul>
-<h2 id="Python-Web-API"><a href="#Python-Web-API" class="headerlink" title="Python Web API"></a>Python Web API</h2><ul>
-<li>Web json文本解析 <a href="https://github.com/lf370332365/Python/blob/master/Python_API/Web_json_parsing.py" target="_blank" rel="noopener">Web_json_parsing</a></li>
-<li>远程数据下载到本地 <a href="https://github.com/lf370332365/Python/blob/master/Python_API/data_from_Web_to_local.py" target="_blank" rel="noopener">data_from_Web_to_local</a></li>
-</ul>
-<h2 id="Python-visualization"><a href="#Python-visualization" class="headerlink" title="Python visualization"></a>Python visualization</h2><ul>
-<li>矢量柱状图 <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/bar_description.py" target="_blank" rel="noopener">bar_description</a></li>
-<li>简单的折线图 <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/mpl_squares.py" target="_blank" rel="noopener">mpl_squares</a></li>
-<li>散点图或曲线图 <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/scatter_squares.py" target="_blank" rel="noopener">scatter_squares</a></li>
-<li>对比折线图 <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/high_lows.py" target="_blank" rel="noopener">high_lows</a></li>
-<li>随机漫步和随机漫步可视化 <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/random_walk/random_walk.py" target="_blank" rel="noopener">random_walk</a> &amp; <a href="https://github.com/lf370332365/Python/blob/master/Python_visualization/random_walk/rw_visual.py" target="_blank" rel="noopener">random_walk_visualization</a></li>
-</ul>
-<h2 id="Python-math"><a href="#Python-math" class="headerlink" title="Python math"></a>Python math</h2><h4 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h4><ul>
-<li><p>NumPy一元通用函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/Numpy%E4%B8%80%E5%85%83%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0.png" target="_blank" rel="noopener">NumPy一元通用函数</a></p>
-</li>
-<li><p>NumPy二元通用函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/Numpy%E4%BA%8C%E5%85%83%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0.png" target="_blank" rel="noopener">NumPy二元通用函数</a></p>
-</li>
-<li><p>NumPy基础数组统计方法 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/Numpy%E5%9F%BA%E7%A1%80%E6%95%B0%E7%BB%84%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95.png" target="_blank" rel="noopener">NumPy基础数组统计方法</a></p>
-</li>
-<li><p>集合操作 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_set_operation/set_operation.png" target="_blank" rel="noopener">set_operation</a></p>
-</li>
-<li><p>NumPy数组的集合操作 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/NumPy%E6%95%B0%E7%BB%84%E7%9A%84%E9%9B%86%E5%90%88%E6%93%8D%E4%BD%9C.png" target="_blank" rel="noopener">NumPy数组的集合操作</a></p>
-</li>
-<li><p>Numpy线性代数函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/NumPy%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%87%BD%E6%95%B0.png" target="_blank" rel="noopener">常用numpy.linalg函数</a></p>
-</li>
-<li><p>numpy.random部分函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/numpy.random%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0.png" target="_blank" rel="noopener">numpy.random部分函数</a></p>
-<h4 id="pandas-1"><a href="#pandas-1" class="headerlink" title="pandas"></a>pandas</h4></li>
-<li><p>pandas_series和DataFrame算术方法 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_series%E5%92%8CDataFrame%E7%AE%97%E6%9C%AF%E6%96%B9%E6%B3%95.png" target="_blank" rel="noopener">pandas_series和DataFrame算术方法</a></p>
-</li>
-<li><p>pandas_rank排名中的平级关系打破的method选项 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/Pandas_rank%E6%8E%92%E5%90%8D%E4%B8%AD%E7%9A%84%E5%B9%B3%E7%BA%A7%E5%85%B3%E7%B3%BB%E6%89%93%E7%A0%B4%E7%9A%84method%E9%80%89%E9%A1%B9.png" target="_blank" rel="noopener">pandas_rank排名中的平级关系打破的method选项</a></p>
-</li>
-<li><p>pandas_归约方法可选参数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_%E5%BD%92%E7%BA%A6%E6%96%B9%E6%B3%95%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0.png" target="_blank" rel="noopener">pandas_归约方法可选参数</a></p>
-</li>
-<li><p>pandas_描述和汇总统计 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_%E6%8F%8F%E8%BF%B0%E5%92%8C%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1.png" target="_blank" rel="noopener">pandas_描述和汇总统计</a></p>
-</li>
-<li><p>pandas_唯一值、计数和集合成员属性方法 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_%E6%8F%8F%E8%BF%B0%E5%92%8C%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1.png" target="_blank" rel="noopener">pandas_唯一值、计数和集合成员属性方法</a></p>
-<h4 id="数学应用"><a href="#数学应用" class="headerlink" title="数学应用"></a>数学应用</h4></li>
-<li><p>快速傅里叶变换 <a href="https://github.com/lf370332365/Python/blob/master/Python_FFT.py" target="_blank" rel="noopener">Python_FFT</a></p>
-</li>
-</ul>
-<h2 id="Python-grammar"><a href="#Python-grammar" class="headerlink" title="Python grammar"></a>Python grammar</h2><h4 id="Python-data-type"><a href="#Python-data-type" class="headerlink" title="Python data type"></a>Python data type</h4><ul>
-<li><p>数据类型取值范围 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_data_type/data_type_range.png" target="_blank" rel="noopener">data_type_range</a>  </p>
-</li>
-<li><p>标准Python标量类型 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_data_type/%E6%A0%87%E5%87%86Python%E6%A0%87%E9%87%8F%E7%B1%BB%E5%9E%8B.png" target="_blank" rel="noopener">标准Python标量类型</a></p>
-<h4 id="NumPy-1"><a href="#NumPy-1" class="headerlink" title="NumPy"></a>NumPy</h4></li>
-<li><p>NumPy数据类型 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_data_type/Numpy_data_type.png" target="_blank" rel="noopener">Numpy_data_type</a></p>
-<h4 id="pandas-2"><a href="#pandas-2" class="headerlink" title="pandas"></a>pandas</h4></li>
-<li><p>pandas能输入给DataFrame构造器的数据 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/%E8%83%BD%E8%BE%93%E5%85%A5%E7%BB%99DataFrame%E6%9E%84%E9%80%A0%E5%99%A8%E7%9A%84%E6%95%B0%E6%8D%AE.png" target="_blank" rel="noopener">能输入给DataFrame构造器的数据</a></p>
-</li>
-<li><p>pandas的Index方法和属性 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas%E7%9A%84Index%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7.png" target="_blank" rel="noopener">pandas的Index方法和属性</a>  </p>
-</li>
-<li><p>pandas_series的reindex方法的参数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_series%E7%9A%84reindex%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0.png" target="_blank" rel="noopener">pandas_series的reindex方法的参数</a></p>
-</li>
-<li><p>pandas_DataFrame索引选项 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/pandas/pandas_DataFrame%E7%B4%A2%E5%BC%95%E9%80%89%E9%A1%B9.png" target="_blank" rel="noopener">pandas_DataFrame索引选项</a></p>
-</li>
-<li><p>二元操作符 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/binary_operator/binary_operator.png" target="_blank" rel="noopener">binary_operator</a></p>
-</li>
-<li><p>Datetime格式化详细说明 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_format/Datetime%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E.png" target="_blank" rel="noopener">Datetime格式化详细说明</a></p>
-</li>
-<li><p>Python文件模式 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_file/Python%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F.png" target="_blank" rel="noopener">Python文件模式</a></p>
-</li>
-<li><p>正则表达式语法 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_regular_expression/regular_expression_grammar.png.png" target="_blank" rel="noopener">regular_expression_grammar</a></p>
-</li>
-</ul>
-<h2 id="Python-functions"><a href="#Python-functions" class="headerlink" title="Python functions"></a>Python functions</h2><ul>
-<li>Numpy数组生成 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/NumPy/ndarray_function.png" target="_blank" rel="noopener">Numpy数组生成</a></li>
-<li>一些有用的itertools函数 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_itertools/itertools_function.png" target="_blank" rel="noopener">itertools_function</a></li>
-<li>重要的文件方法 <a href="https://github.com/lf370332365/Python/blob/master/Python_fundamental_tutorial/Python_file/Python%E6%96%87%E4%BB%B6%E6%96%B9%E6%B3%95.png" target="_blank" rel="noopener">重要的文件方法</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/01/Hello-Hexo/" data-id="ck4v41agu0000n4vl81xfgmmv" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/01/hello-world/" class="article-date">
-  <time datetime="2020-01-01T08:22:46.545Z" itemprop="datePublished">2020-01-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/01/hello-world/" data-id="ck4v41ah20001n4vld2ck0as8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/01/01/Hello-Hexo/">Hello Hexo</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/01/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
-</body>
-</html>
+                +post-meta(post)
+    include _partial/paginator.pug
